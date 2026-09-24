@@ -32,7 +32,7 @@ pipeline {
             passwordVariable: 'DEPLOY_PWD'
           )
         ]){
-          sh "some script ${DEPLOY_USER} ${DEPLOY_PWD}"
+          echo "some script ${DEPLOY_USER} ${DEPLOY_PWD}"
         }
         echo 'deploying application'
         echo "deploying ${params.VERSION}, ${params.CHOICE_VERSION}"
