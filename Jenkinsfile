@@ -1,6 +1,5 @@
 pipeline {
   agent any
-
   parameters {
     string(name: 'VERSION', defaultValue: '', description: 'version to deploy on prod')
     choice(name: 'CHOICE_VERSION', choices: ['1.1', '1.2'], description: 'version you can choose from')
@@ -35,6 +34,13 @@ pipeline {
       }
     }
     stage("deploy") {
+      input{
+          message "Select the environment to deploy to"
+          ok "Env selected"
+          parameters {
+            choice(name: 'ENV1', choices: ['dev', 'staging', 'prod'], description: 'environment to deploy to')
+          }
+      }
       steps {
         withCredentials([
           usernamePassword(
@@ -46,7 +52,11 @@ pipeline {
           echo 'some script ${DEPLOY_USER} ${DEPLOY_PWD}'
         }
         script {
+          env.ENV = input message "Select the environment to deploy to", ok "Env selected", parameters: [
+            choice(name: 'ENV2', choices: ['dev', 'staging', 'prod'], description: 'environment to deploy to')
+          ]
           gv.deployApp()
+          echo "Deploying to env1: ${ENV1} env2: ${ENV2}"
         }
       }
     }
