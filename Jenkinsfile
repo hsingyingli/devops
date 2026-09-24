@@ -8,9 +8,18 @@ pipeline {
   }
 
   stages {
+    stage("init") {
+      steps {
+        script {
+            gv = load "script.groovy"
+        }
+      }
+    }
     stage("build") {
       steps {
-          echo 'building application'
+        script {
+            gv.buildApp()
+          }
         }
     }
     stage("test") {
@@ -20,7 +29,9 @@ pipeline {
         }
       }
       steps {
-        echo 'testing application'
+        script {
+          gv.testApp()
+        }
       }
     }
     stage("deploy") {
@@ -32,10 +43,11 @@ pipeline {
             passwordVariable: 'DEPLOY_PWD'
           )
         ]){
-          echo "some script ${DEPLOY_USER} ${DEPLOY_PWD}"
+          echo 'some script ${DEPLOY_USER} ${DEPLOY_PWD}'
         }
-        echo 'deploying application'
-        echo "deploying ${params.VERSION}, ${params.CHOICE_VERSION}"
+        script {
+          gv.deployApp()
+        }
       }
     }
   }
