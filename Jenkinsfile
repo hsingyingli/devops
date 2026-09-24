@@ -27,15 +27,15 @@ pipeline {
       steps {
         withCredentials([
           usernamePassword(
-            credentials: '652a1c08-2c7a-4ddc-8c09-2f87682e8c70',
-            usernameVariable: USER, 
-            passwordVariable: PWD
+            credentialsId: '652a1c08-2c7a-4ddc-8c09-2f87682e8c70',
+            usernameVariable: 'DEPLOY_USER',
+            passwordVariable: 'DEPLOY_PWD'
           )
         ]){
-          sh "some script ${USER} ${PWD}"
+          sh "some script ${DEPLOY_USER} ${DEPLOY_PWD}"
         }
         echo 'deploying application'
-        echo 'deploying ${params.VERSION}, ${params.CHOICE_VERSION}'
+        echo "deploying ${params.VERSION}, ${params.CHOICE_VERSION}"
       }
     }
   }
