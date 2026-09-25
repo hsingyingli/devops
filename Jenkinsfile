@@ -1,10 +1,6 @@
 pipeline {
   agent any
   stages {
-    stage("init") {
-      steps {
-      }
-    }
     stage("build") {
       steps {
         echo "building the docker image..."
@@ -15,15 +11,6 @@ pipeline {
             docker push aaronhyl/devops:0.0.1
           '''
         }
-      }
-    }
-    stage("test") {
-      steps {
-      }
-    }
-    stage("deploy") {
-      steps {
-
       }
     }
   }
