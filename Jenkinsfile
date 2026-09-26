@@ -45,17 +45,14 @@ pipeline {
 
     post {
         always {
-            // always execute after all stages are finished
             echo 'always fire'
         }
 
         success {
-            // if all stages are succeed
             echo 'fire if success'
         }
 
         failure {
-            // if some stages failed
             echo 'fire if failed'
         }
     }
